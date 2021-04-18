@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ImageBin</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div class="contact-clean">
+        <form id="upload-form" method="post">
+            <h2 class="text-center">Upload Image</h2>
+            <div class="form-group"><input class="form-control" type="text" name="imageName" placeholder="Image Name" required=""></div>
+            <div class="form-group"><input type="file" id="file-input" class="form-control" name="image" required="" accept="image/x-png,image/gif,image/jpeg"></div>
+            <div id="upload-result" style="display: none;">
+                <p id="upload-result-message" style="text-align: center;">Paragraph</p>
+            </div>
+            <div class="form-group"><button class="btn btn-primary" type="submit">send </button></div>
+        </form>
+    </div>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

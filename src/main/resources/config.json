@@ -1,0 +1,9 @@
+{
+  "mysql-host": "localhost:3306",
+  "mysql-database": "image_bin",
+  "mysql-user": "imgbin",
+  "mysql-password": "123456789",
+
+  "public-key-length": 8,
+  "max-image-size": 6
+}
