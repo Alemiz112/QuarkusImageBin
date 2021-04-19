@@ -2,11 +2,13 @@ package eu.mizerak.alemiz.imgbin.provider;
 
 import com.google.gson.JsonObject;
 import eu.mizerak.alemiz.imgbin.utils.Utils;
+import org.jboss.logging.Logger;
 
 import java.sql.*;
 
 public class MySql {
 
+    private static final Logger log = Logger.getLogger(MySql.class);
     private static MySql instance;
 
     public static MySql init(JsonObject config) {
@@ -51,10 +53,26 @@ public class MySql {
         }
     }
 
-    public void onStartup() throws SQLException {
-        try (Connection conn = this.connectionInfo.getMySqlInstance()) {
-            conn.createStatement().execute("CREATE TABLE IF NOT EXISTS images(id INT AUTO_INCREMENT primary key NOT NULL, public_id TEXT, image_name TEXT, image LONGBLOB);");
+    public void onStartup() throws SQLException, InterruptedException {
+        Connection conn;
+        try {
+            conn = this.connectionInfo.getMySqlInstance();
+        } catch (SQLException e) {
+            log.warn("Unable to open connection to database! Attempting again in 10 seconds!");
+            Thread.sleep(10 * 1000);
+
+            // Attempt to connect again and throw exception if failed.
+            conn = this.connectionInfo.getMySqlInstance();
+            log.info("Connection to database was successfully initialized!");
         }
+
+        conn.createStatement().execute("CREATE TABLE IF NOT EXISTS images(" +
+                "id INT AUTO_INCREMENT primary key NOT NULL, " +
+                "public_id TEXT, " +
+                "image_name TEXT, " +
+                "image LONGBLOB);"
+        );
+        conn.close();
     }
 
     /**

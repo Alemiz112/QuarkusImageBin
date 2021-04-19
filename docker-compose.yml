@@ -19,8 +19,8 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: imagebin
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=imagebin
     command: --max_allowed_packet=16M
     ports:
       - "3306:3306"
