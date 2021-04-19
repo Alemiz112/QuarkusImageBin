@@ -59,9 +59,19 @@ public class ImageManager {
     }
 
     public byte[] getImage(String imageId) {
+        String publicId;
+        int privateId;
+        try {
+            publicId = Utils.getPublicId(imageId);
+            privateId = Utils.getPrivateId(imageId);
+        } catch (Exception e) {
+            // User entered incorrect image ID
+            return null;
+        }
+
         try {
             log.debug("Retrieving image with imageId="+imageId);
-            return MySql.get().getImageData(imageId);
+            return MySql.get().getImageData(publicId, privateId);
         } catch (SQLException e) {
             log.error("Failed to load image from database! imageId="+imageId, e);
         }

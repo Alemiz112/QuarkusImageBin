@@ -101,10 +101,7 @@ public class MySql {
         }
     }
 
-    public byte[] getImageData(String imageId) throws SQLException {
-        String publicId = Utils.getPublicId(imageId);
-        int privateId = Utils.getPrivateId(imageId);
-
+    public byte[] getImageData(String publicId, int privateId) throws SQLException {
         try (Connection conn = this.connectionInfo.getMySqlInstance()) {
             ResultSet query = conn.createStatement().executeQuery("SELECT image FROM `images` WHERE `id`="+privateId+" AND `public_id`='"+publicId+"';");
             query.next();

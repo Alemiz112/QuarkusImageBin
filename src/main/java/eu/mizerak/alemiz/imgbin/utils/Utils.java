@@ -2,19 +2,24 @@ package eu.mizerak.alemiz.imgbin.utils;
 
 import java.io.*;
 import java.security.SecureRandom;
-import java.util.Base64;
 
 public class Utils {
+
+    public static final String IMAGE_KEY_DELIMITER = "-";
+    private static final String alphabet = "0123456789abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ";
 
     public static String generatePublicId(int len) {
         if (len < 1) {
             throw new IllegalArgumentException("String length must be higher than 0!");
         }
 
-        byte[] bytes = new byte[len];
         SecureRandom random = new SecureRandom();
-        random.nextBytes(bytes);
-        return Base64.getEncoder().encodeToString(bytes);
+
+        char[] chars = new char[len];
+        for (int i = 0; i < len; i++) {
+            chars[i] = alphabet.charAt(random.nextInt(alphabet.length()));
+        }
+        return new String(chars);
     }
 
     public static String generateImageId(int privateId, String publicId) {
@@ -22,7 +27,7 @@ public class Utils {
     }
 
     public static String getPublicId(String imageId) {
-        String[] parts = imageId.split("-");
+        String[] parts = imageId.split(IMAGE_KEY_DELIMITER);
         if (parts.length < 2) {
             throw new IllegalStateException("Malformed image ID provided!");
         }
@@ -30,7 +35,7 @@ public class Utils {
     }
 
     public static int getPrivateId(String imageId) {
-        String[] parts = imageId.split("-");
+        String[] parts = imageId.split(IMAGE_KEY_DELIMITER);
         if (parts.length < 2) {
             throw new IllegalStateException("Malformed image ID provided!");
         }
